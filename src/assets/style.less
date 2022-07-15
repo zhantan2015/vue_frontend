@@ -1,0 +1,30 @@
+// *{
+//     padding: 0;
+//     margin: 0;
+//     box-sizing: border-box;
+// }
+
+:root {
+    --outer-padding: 18px;
+    --light-outer-color: #bdc3c7;
+    --dark-outer-color: #444747;
+}
+
+body {
+    margin: 0;
+}
+
+*.theme {
+    transition: background-color 0.5s linear;
+}
+
+.app__outer {
+    // margin: var(--outer-margin);
+    padding: var(--outer-padding);
+    height: calc(100vh - 2 * var(--outer-padding));
+    background-color: var(--light-outer-color)
+}
+
+.app__outer.dark {
+    background-color: var(--dark-outer-color);
+}
