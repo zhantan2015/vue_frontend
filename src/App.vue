@@ -63,57 +63,43 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: #eff0f1;
-
   .app__inner {
     height: calc(100vh - 2 * var(--outer-padding));
     overflow-y: auto;
     padding: 0 4vw;
     box-sizing: border-box;
-
     background-color: #eff0f1;
-
-
     &.dark {
       background-color: #2b2d2e;
-
       & * {
         transition-property: color;
         color: #cfc8be;
       }
-
       & input,
       & select {
         background-color: #7f8c8d;
       }
     }
-
     &::-webkit-scrollbar {
       display: none;
     }
   }
-
-
   .site-header {
     text-align: left;
     // padding: 2rem 4rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
-
     .title {
       flex-grow: 1;
-
       h3 {
         font-family: Georgia, serif;
         color: #7f8c8d;
         font-size: 1.1rem;
       }
     }
-
     .menu-btn {
-
       cursor: pointer;
-
       .menu-border {
         width: 32px;
         height: 32px;
@@ -124,7 +110,6 @@ export default {
         align-items: center;
         justify-content: space-evenly;
         padding: 2px 3px;
-
         #menu-1,
         #menu-2,
         #menu-3 {
@@ -135,13 +120,9 @@ export default {
           transition: 0.2s all ease-in-out;
         }
       }
-
-
-
       &.dark {
         .menu-border {
           border-color: #cfc8be;
-
           #menu-1,
           #menu-2,
           #menu-3 {
@@ -150,36 +131,30 @@ export default {
         }
       }
     }
-
     #menu-cbox {
       display: none;
     }
-
     #menu-cbox:checked~.menu-btn {
       #menu-2 {
         transform: translateX(-100%);
         opacity: 0;
       }
-
       #menu-1 {
         // transform: rotate(45deg);
         transform: translateY(9px) rotate(45deg);
       }
-
       #menu-3 {
         // transform: rotate(45deg);
         transform: translateY(-9px) rotate(-45deg);
       }
     }
   }
-
   nav {
     font-family: "Microsoft YaHei", Montserrat, "Helvetica Neue", sans-serif;
     display: flex;
     flex-direction: column;
     text-align: left;
     // padding: 0 4rem;
-
     a {
       display: block;
       padding: 0.8rem 0;
@@ -188,28 +163,23 @@ export default {
       color: #3d3d3d;
       font-weight: 200;
       border-top: 1px solid #3d3d3d33;
-
       &:last-child {
         border-bottom: 1px solid #3d3d3d33;
       }
-
       &:active {
         font-weight: 500;
         color: #2b2d2e;
       }
     }
   }
-
   main {
     margin-top: 2rem;
     // padding: 0 4rem;
   }
-
   .theme-toggle {
     --tt-p: 6px;
     --tt-item-w: 1.3rem;
     cursor: pointer;
-
     position: fixed;
     right: 2.6rem;
     bottom: 2.6rem;
@@ -217,41 +187,32 @@ export default {
     width: calc(var(--tt-item-w) * 2 + var(--tt-p) * 3);
     border-radius: 1.5rem;
     z-index: 999;
-
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-
     background-color: #2c3e50;
-
     .sun,
     .moon,
     .mask {
       width: var(--tt-item-w);
       height: var(--tt-item-w);
     }
-
     .sun,
     .moon {
       fill: #eff0f1;
     }
-
     .mask {
       position: absolute;
       width: calc(var(--tt-item-w) + var(--tt-p) / 2);
       height: calc(var(--tt-item-w) + var(--tt-p) / 2);
-
       background-color: #eff0f1;
       border-radius: 50%;
       left: calc(var(--tt-p) / 2);
       transition: all .2s ease-in;
     }
-
   }
-
   .theme-toggle.dark {
     background-color: #39393D;
-
     .mask {
       left: calc(var(--tt-item-w) + var(--tt-p) * 2);
       background-color: #7f8c8d;

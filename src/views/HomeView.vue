@@ -1,17 +1,13 @@
 <template>
   <div class="home">
-    <HelloWorld />
+    <Article></Article>
   </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+import Article from '@/components/articleComponent.vue'
+const props = defineProps({
+  dark: Boolean
+})
 </script>

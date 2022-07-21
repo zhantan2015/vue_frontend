@@ -14,6 +14,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+<<<<<<< HEAD
   }, {
     path: '/edit-article',
     name: 'editArticle',
@@ -26,6 +27,8 @@ const routes = [
     path: '/:pathMatch(.*)',
     name: 'test',
     component: () => import('../views/Test.vue')
+=======
+>>>>>>> 09cb203 (切换分支master)
   }
 ]
 
