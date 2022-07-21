@@ -1,0 +1,87 @@
+// *{
+//     padding: 0;
+//     margin: 0;
+//     box-sizing: border-box;
+// }
+
+html {
+    font-size: 15px;
+}
+
+:root {
+    --outer-padding: 18px;
+    --light-outer-color: #bdc3c7;
+    --dark-outer-color: #444747;
+}
+
+body {
+    margin: 0;
+}
+
+*.theme {
+    transition: background-color 0.5s linear;
+}
+
+.app__outer {
+    // margin: var(--outer-margin);
+    padding: var(--outer-padding);
+    height: calc(100vh - 2 * var(--outer-padding));
+    background-color: var(--light-outer-color)
+}
+
+.app__outer.dark {
+    background-color: var(--dark-outer-color);
+}
+
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 2rem;
+    justify-items: center;
+    align-items: center;
+
+    margin: 2rem 0;
+
+    label {
+        font-size: 1rem;
+        margin-right: 0.2rem;
+    }
+
+
+    input,
+    select {
+        display: block;
+        border-style: none;
+        flex-grow: 1;
+        padding: 0 .2rem;
+        margin: 0 .2rem;
+        font-size: 1rem;
+        border-radius: 3px;
+        height: 100%;
+        outline: none;
+    }
+
+    span.submit {
+        display: block;
+        padding: 10px 16px;
+        border-radius: 8px;
+        background-color: #015958;
+        color: #bdc3c7;
+        margin-left: .6rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #008F8C;
+        }
+    }
+
+    & a {
+        color: dodgerblue;
+
+        &:hover {
+            color: #444747;
+        }
+    }
+
+}

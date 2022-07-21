@@ -18,6 +18,14 @@ const routes = [
     path: '/edit-article',
     name: 'editArticle',
     component: () => import('../views/EditArticleView.vue')
+  }, {
+    path: '/logs',
+    name: 'logs',
+    component: () => import('../views/LogsView.vue')
+  }, {
+    path: '/:pathMatch(.*)',
+    name: 'test',
+    component: () => import('../views/Test.vue')
   }
 ]
 

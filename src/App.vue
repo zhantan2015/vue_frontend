@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import '@/assets/style.less'
+import '@/assets/css/style.less'
 import { ref } from 'vue'
 
 export default {
@@ -67,6 +67,8 @@ export default {
   .app__inner {
     height: calc(100vh - 2 * var(--outer-padding));
     overflow-y: auto;
+    padding: 0 4vw;
+    box-sizing: border-box;
 
     background-color: #eff0f1;
 
@@ -79,7 +81,8 @@ export default {
         color: #cfc8be;
       }
 
-      & input{
+      & input,
+      & select {
         background-color: #7f8c8d;
       }
     }
@@ -92,7 +95,7 @@ export default {
 
   .site-header {
     text-align: left;
-    padding: 2rem 4rem 0;
+    // padding: 2rem 4rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,6 +106,7 @@ export default {
       h3 {
         font-family: Georgia, serif;
         color: #7f8c8d;
+        font-size: 1.1rem;
       }
     }
 
@@ -174,7 +178,7 @@ export default {
     display: flex;
     flex-direction: column;
     text-align: left;
-    padding: 0 4rem;
+    // padding: 0 4rem;
 
     a {
       display: block;
@@ -198,7 +202,7 @@ export default {
 
   main {
     margin-top: 2rem;
-    padding: 0 4rem;
+    // padding: 0 4rem;
   }
 
   .theme-toggle {
@@ -224,6 +228,7 @@ export default {
     .moon,
     .mask {
       width: var(--tt-item-w);
+      height: var(--tt-item-w);
     }
 
     .sun,
