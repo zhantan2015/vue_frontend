@@ -16,14 +16,13 @@ document.documentElement.scrollTop = 0;
 const articleStateObj = articleState()
 
 const { articleList } = storeToRefs(articleStateObj)
-
 articleList.value.map(i => {
   if (i.content.length <= 100) {
     i.comput_content = i.content
   }
   else {
     let str = i.content
-    i.comput_content = str.slice(0, str.indexOf('</p>'))
+    i.comput_content = str.slice(0, str.indexOf('<br>'))
   }
   return i
 })

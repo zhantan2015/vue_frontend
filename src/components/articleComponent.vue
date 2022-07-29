@@ -3,7 +3,7 @@
         <header>
             <h2 v-text="article.title"></h2>
         </header>
-        <main v-html="article.comput_content ">
+        <main v-html="full ? article.content : comput_content">
         </main>
         <footer>
             <span class="continue_reading">
@@ -40,7 +40,7 @@
                     </svg>
                     <span v-text="article.category"></span>
                 </div>
-                <div v-if="article.tags && article.tags.length > 0">
+                <div class="tags_div" v-if="article.tags && article.tags.length > 0">
                     <svg t="1658395630613" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="4912" width="200" height="200">
                         <path
@@ -57,48 +57,48 @@
     </article>
 </template>
 <script setup>
-import { reactive, toRefs, computed } from 'vue';
-const data = reactive({
-    article: {
-        title: "二逼日记",
-        content: `<p >我有个朋友叫小强，是我初中同学。中考之后我考上了市里的高中，他则留在了乡里。因为我要住校，一个月才能回一次家，因此联络越来越少。前几天听说他因为&ldquo;男女交往过密&rdquo;的罪名被学校政教处处罚了，为此他还病了一场。我放假回家的时候特地去探望了一下小强。见到小强时，我们还和以前一样相谈甚欢，他给我看了这段时间写的一些日记，内容多处语法错乱语义不明，他在这段日子的心理状态可见一斑。我问他能不能把这些日记发到我们学校的校报上？他回答说没问题。我说那你给起个名字吧！他说，这事儿挺二的，就叫二逼日记吧！我于是略作修改，隐去关键的人物姓名和时间地点，其余均原文奉上。</p><br>
-<h3>一</h3>
-<p>今天语文课时，讲的是《祝福》。我翻了翻前几日托人帮我买的《鲁迅全集》。我突然想起，这帮我买这本书的人就是一个女生。于是我心里一直难以平静，不知道有没有人知道，会不会被处分？我几乎一整节课都在走神。</p>
-<h3>二</h3>
-<p >今天中午打饭时，我照例排在六号窗口。我看到前面有一男一女牵着手在排队。后面一个老师在巡视，两人马上站开距离，我不知道他们为何突然这样，不过我隐约觉得他们是幸运的。我又想起了那个夜晚，虽然事情已经过去几天了，但是我却一直无法释怀。我不知道为什么跟女生走夜路会违反纪律。我不明白，我实在想不通！不过我觉得，既然老师说不行，那就不行吧！我开始减少与女生的接触，我警觉得有理。</p>
-<h3>三</h3>
-<p >无月的夜，我与一名女生牵着手走在少人的校道上。我觉得有点惊异。因为我完全不清楚自己是从哪里过来的。或许是从教室吧，我想。还有我身边的女子，她是谁？我看向她的脸，但是无论我如何努力，却始终无法看清她的脸。我可能近视了，明天得去配一副眼镜了。突然，一个红衣男子出现在我们面前，他严厉地说，不行！快放开那个女孩。我说，什么？他说，你们不能在一起！女生说，为什么？那男子面无表情地抬起右手，我看到他手中拿着一支手枪，他扣动了扳机。我感觉到四周的一切都静止了，只见一颗银色的子弹从他的枪口缓缓射出，进入那女生的右眼。接着那女生倒地，她的脑浆和鲜血溅了我一脸。我想大叫，却感觉自己的喉咙好像塞满了棉花，怎样也发不出声，我转头看向那个红衣男子，同样也是一张模糊不清的脸。然后发现四周的一切也开始模糊不清&hellip;&hellip;我惊醒了，原来只是一个梦。我摸了摸自己的脸，冷冰冰的，头发已经被汗水浸湿了。这真的只是一个梦？</p>
-<h3>四</h3>
-<p >我坐在座位上，看着班上女同学个个都笑得花枝招展的。但是我却觉得那笑容无比狰狞。那是在嘲笑我吗？肯定是的，不然她们何以笑的那么狰狞？虽然我已经尽量避免与女生接触了，但不知她们是不是有意的，非要和我说话，和我同行，捉弄我。我想她们这是在奚落我吧！太可恶了。</p>
-<h3>五</h3>
-<p >今天大课间，我翻着《鲁迅全集》，里面的一段话引起了我的注意:</p>
-<p >男女同吸着相通的空气，从这个男人的鼻孔呼出来，那个女人的鼻孔吸进去。又从那个女人的鼻孔呼出来，被另一个男人的鼻孔吸进去。混淆乾坤，实在比海水只触着皮肤更为严重。对于这一个严重的问题倘没有办法，男女的界限就永远分不清。</p>
-<h3>六</h3>
-<p >最近几天，班主任总在强调纪律问题，而且侧重说了男女问题。每次说的时候还时不时看我几眼。我有点心慌，他是在暗示我我的纪律方面有问题吗？是&ldquo;男女交往过密&rdquo;吗？自从那件事之后，我就尽量减少了与女生的接触，但是即便如此，也总难免与她们有所接触。比如，有一次上厕所回教室的路上，我被一个女生从背后拍了一下肩膀；还有一次，我借一本书给一个女生，不小心碰到了她的手指；以及有一次，我擦黑板的时候，被一个女生碰了一下背。天啊！我居然在不知不觉中与女生有了这么多接触。我有点害怕，我会不会受罚？</p>
-<h3>七</h3>
-<p >今天在升旗仪式上，政教处主任提出要严抓&ldquo;男女交往过密&rdquo;的违法犯罪行为。我心里不禁咯噔一下，这是要杀鸡儆猴吗？最近&ldquo;男女交往过密&rdquo;这个名词在学校的各种通知和会议上出现的频率越来越高，我很想说我已经诚心悔悟并且永不再犯了，却没有人告诉我具体的&ldquo;男女交往过密&rdquo;是个怎么样的标准。上课时离我最近的女生在两张课桌的距离之外，我不知道这算不算过密。但如果这算过密的话，杨AA的同桌就是女生，为什么他没有过密呢？我唯一可能比他过密的时候就是英语课的时候，英语老师总是有意无意靠着我的课桌给大家讲课。虽然同学们都说她是个美女，但是我却越来越讨厌她，因为她这样跟我过密分明想让我受罚！</p>
-<h3>八</h3>
-<p style="font-family: 正楷,sans-serif;">这两天我都没有睡好。今天大课间时，我趴在桌子上睡觉。突然，有人叫醒我，说年级长有事找我。我顿时心里一紧，不知道级长为什么找我，难道他又看到了什么？是回厕所那次？还是借书那次？或者是擦黑板那次？难道是英语老师在陷害我？我来不及多想，起身便往外走。情急之中脚不小心踢了一下桌子腿，抽屉里面的《鲁迅全集》掉了出来，书页打开到其中一页，那是《狂人日记》。我看到那最后一句话:</p>
-<p style="padding-left: 24px; font-family: 方正行楷,sans-serif;">救救孩子！</p>
-<p style="margin-top: 46px;">2012-4-9</p>
-<p style="font-family: 正楷,sans-serif;">16:00</p>
-<p style="font-family: 正楷,sans-serif;">旃檀</p>`,
-        createTime: "2022-7-22 20:12:28",
-        category: "未分类",
-        tags: ["标签1", "T2"]
+import { storeToRefs } from 'pinia';
+import { mainState } from '@/store'
+import { computed } from '@vue/reactivity';
+import { createId } from '@/assets/js/common'
+import router from '@/router';
+
+const props = defineProps(['article', 'full'])
+
+const article = props.article
+
+const { dark } = storeToRefs(mainState())
+function continueReading() {
+    router.push('/article/' + article.aid)
+}
+
+const comput_content = computed(() => {
+    if (article.content.length <= 100) {
+        return article.content
     }
-})
-const comput_content = computed(() =>
-    data.article.content.slice(0, data.article.content.indexOf('<br>'))
+    else {
+        let str = article.content
+        return str.slice(0, str.indexOf('</p>'))
+    }
+    return i
+}
 )
-const { article } = { ...toRefs(data) }
+
 </script>
 <style scoped lang="less">
 article {
     text-align: left;
 
+    h1 {
+        font-size: 1.8rem;
+    }
+
     main {
         font-family: Merriweather, Georgia, serif;
+        margin-bottom: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.75;
     }
 
     footer {
@@ -131,6 +131,12 @@ article {
                     line-height: .8rem;
                     font-size: .8rem;
                     margin-right: .1rem;
+                }
+            }
+
+            .tags_div {
+                span {
+                    margin-right: .2rem;
                 }
             }
         }
