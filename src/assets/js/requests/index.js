@@ -8,7 +8,6 @@ function getToken() {
 const service = axios.create({
     baseURL: process.env['BASE_URL'] || '//localhost:8888',
     timeout: 60 * 1000,
-    
 })
 
 // 添加请求拦截器
