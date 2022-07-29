@@ -6,7 +6,7 @@ function getToken() {
 }
 
 const service = axios.create({
-    baseURL: process.env.REQUESTS_BASE_URL || '//localhost:8888',
+    baseURL: process.env.VUE_APP_REQUESTS_BASE_URL || '//localhost:8888',
     timeout: 60 * 1000,
 })
 
