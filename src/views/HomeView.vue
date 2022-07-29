@@ -1,17 +1,14 @@
 <template>
   <div class="home">
-    <Article class="article" v-for="article in articleList" :key="article.aid" :article="article"></Article>
+    <!-- <Article class="article" v-for="article in articleList" :key="article.aid" :article="article"></Article> -->
   </div>
 </template>
 
 <script setup>
 // @ is an alias to /src
-import Article from '@/components/ArticleComponent.vue'
-// import { reactive } from 'vue';
+// import Article from '@/components/ArticleComponent.vue'
 import { storeToRefs } from 'pinia'
 import { articleState } from '@/store';
-
-
 
 document.body.scrollTop = 0;
 document.documentElement.scrollTop = 0;
