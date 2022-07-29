@@ -55,7 +55,6 @@ async function submitComment(commentInfo) {
     delete authorInfo.value.rpid
     commentStateObj.getCommentListByAid(article.aid)
 }
-
 function replyComment(value) {
     showReply.value = value
 }
