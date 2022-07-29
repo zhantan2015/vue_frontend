@@ -8,7 +8,7 @@
 // @ is an alias to /src
 
 // import Article from '@/components/ArticleComponent.vue'
-import Article from '@/components/ArticleComponent.vue'
+import Article from '@/components/articleComponent.vue'
 import { storeToRefs } from 'pinia'
 import { articleState } from '@/store';
 
