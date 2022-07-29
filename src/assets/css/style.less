@@ -4,18 +4,29 @@
 //     box-sizing: border-box;
 // }
 
-html{
-    font-size: 15px;
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #bdc3c7;
 }
 
 :root {
-    --outer-padding: 18px;
+    --outer-padding: 1rem;
     --light-outer-color: #bdc3c7;
     --dark-outer-color: #444747;
 }
 
 body {
     margin: 0;
+}
+
+time {
+    font-family: Montserrat, "Helvetica Neue", sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 200;
+    line-height: 1.61538462;
 }
 
 *.theme {
@@ -29,6 +40,7 @@ body {
     background-color: var(--light-outer-color)
 }
 
-.app__outer.dark {
+.app__outer.dark,
+body.dark {
     background-color: var(--dark-outer-color);
 }
