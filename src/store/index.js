@@ -18,7 +18,6 @@ function formatDT(time) {
 
     return (year + '-' + month + '-' + day + ' ' + hours + ':' + min + ':' + seconds);
 }
-
 // 参数1：容器ID，必须唯一；
 // 参数2：Options对象
 export const mainState = defineStore('main', {
