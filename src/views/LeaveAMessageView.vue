@@ -32,7 +32,6 @@ const commentStateObj = commentState()
 const { authorInfo } = storeToRefs(commentStateObj)
 commentStateObj.getLeaveMessageList()
 const { leaveMessageList } = { ...storeToRefs(commentStateObj) }
-console.log(leaveMessageList)
 
 let showReply = ref(true)
 
@@ -40,7 +39,6 @@ const notification = useNotification()
 
 async function submitComment(commentInfo) {
   commentInfo = { ...commentInfo }
-  // console.log(commentInfo)
   let res = await request.post('/leave-message', commentInfo)
   notification[res.type](res.message)
   authorInfo.value.content = ''
