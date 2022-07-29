@@ -103,7 +103,6 @@ import router from '@/router';
 
 export default {
   setup() {
-    console.log(process.env)
     // 读取mainState中的内容
     const mainStates = mainState()
     // 将mainStates中存储的内容转换为响应式对象
