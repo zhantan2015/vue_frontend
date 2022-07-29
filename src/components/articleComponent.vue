@@ -3,7 +3,7 @@
         <header>
             <h1 v-text="article.title"></h1>
         </header>
-        <main v-html="comput_content">
+        <main v-html="full ? article.content : comput_content">
         </main>
         <footer>
             <span class="continue_reading" @click="continueReading" v-if="!full">
@@ -40,7 +40,7 @@
                     </svg>
                     <span v-text="article.category"></span>
                 </div>
-                <div v-if="article.tags && article.tags.length > 0">
+                <div class="tags_div" v-if="article.tags && article.tags.length > 0">
                     <svg t="1658395630613" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="4912" width="200" height="200">
                         <path
@@ -66,20 +66,39 @@ import router from '@/router';
 const props = defineProps(['article', 'full'])
 
 const article = props.article
-const comput_content = computed(() => {
-    if (article.content.length <= 100) return article.content
-})
+
 const { dark } = storeToRefs(mainState())
 function continueReading() {
     router.push('/article/' + article.aid)
 }
+
+const comput_content = computed(() => {
+    if (article.content.length <= 100) {
+        return article.content
+    }
+    else {
+        let str = article.content
+        return str.slice(0, str.indexOf('</p>'))
+    }
+    return i
+}
+)
+
 </script>
 <style scoped lang="less">
 article {
     text-align: left;
 
+    h1 {
+        font-size: 1.8rem;
+    }
+
     main {
         font-family: Merriweather, Georgia, serif;
+        margin-bottom: 1rem;
+
+        font-size: 1rem;
+        line-height: 1.75;
     }
 
     footer {
@@ -126,6 +145,12 @@ article {
                     line-height: .8rem;
                     font-size: .8rem;
                     margin-right: .1rem;
+                }
+            }
+
+            .tags_div {
+                span {
+                    margin-right: .2rem;
                 }
             }
         }

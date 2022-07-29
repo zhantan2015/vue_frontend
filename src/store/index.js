@@ -42,7 +42,7 @@ export const mainState = defineStore('main', {
     }
 })
 export const articleState = defineStore('article', {
-    persist: true,
+    // persist: true,
     state: () => ({
         articleList: []
     }),
