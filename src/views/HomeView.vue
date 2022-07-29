@@ -6,6 +6,7 @@
 
 <script setup>
 // @ is an alias to /src
+
 import Article from '@/components/ArticleComponent.vue'
 import { storeToRefs } from 'pinia'
 import { articleState } from '@/store';
