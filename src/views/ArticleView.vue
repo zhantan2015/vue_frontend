@@ -26,7 +26,7 @@ import { articleState, commentState } from '@/store';
 import { storeToRefs } from 'pinia'
 
 import request from '@/assets/js/requests'
-import Article from '../components/ArticleComponent.vue'
+import Article from '@/components/ArticleComponent.vue'
 import Reply from '@/components/ReplyComponent.vue'
 import Comment from '@/components/CommentComponent.vue'
 
