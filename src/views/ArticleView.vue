@@ -30,7 +30,6 @@ import Article from '@/components/ArticleComponent.vue'
 import Reply from '@/components/ReplyComponent.vue'
 import Comment from '@/components/CommentComponent.vue'
 
-
 document.body.scrollTop = 0;
 document.documentElement.scrollTop = 0;
 
