@@ -48,8 +48,18 @@ import { ref } from 'vue'
 export default {
   setup() {
     let menuActive = ref(false)
-    let dark = ref(false)
-    return { menuActive, dark }
+
+
+    function toggle_theme() {
+      if (dark.value) document.body.classList.remove('dark')
+      else document.body.classList.add('dark')
+      dark.value = !dark.value
+    }
+    function flushCache() {
+      requests.get('/flush-cache').then(res => console.log(res))
+    }
+
+    return { router, menuActive, dark, toggle_theme, flushCache, notificationInfo }
   }
 }
 
