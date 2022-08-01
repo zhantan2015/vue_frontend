@@ -119,6 +119,7 @@ export default {
       if (dark.value) document.body.classList.remove('dark')
       else document.body.classList.add('dark')
       dark.value = !dark.value
+      localStorage['dark'] = dark.value
     }
 
     return { router, menuActive, dark, toggle_theme, notificationInfo }
