@@ -38,10 +38,8 @@ const comment = props['comment']
 const commentStateObj = commentState()
 
 const rpText = computed(() => {
-    return `Re:
-    ${comment.author}:
-    ${comment.content}    ===================================================
-    `
+    return `Re:${comment.author} - 
+`
 })
 
 function replyComment() {

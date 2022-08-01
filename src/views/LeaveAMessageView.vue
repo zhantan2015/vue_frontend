@@ -4,7 +4,7 @@
       <h2>涂鸦墙</h2>
       <div class="comment__blank comment_item" v-if="leaveMessageList.length == 0">
         <p>
-          这里居然没吵起来？！在下面开始你的引战吧！
+          寻寻觅觅冷冷清清凄凄惨惨戚戚
         </p>
       </div>
       <Comment class="comment_item" @submit-reply-comment="submitComment" @reply-comment="replyComment"
