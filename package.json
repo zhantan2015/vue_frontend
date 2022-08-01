@@ -32,7 +32,9 @@
     "eslint-plugin-vue": "^9.2.0",
     "jest": "^27.0.5",
     "less": "^4.0.0",
-    "less-loader": "^8.0.0"
+    "less-loader": "^8.0.0",
+    "naive-ui": "^2.32.1",
+    "vfonts": "^0.0.3"
   },
   "eslintConfig": {
     "root": true,
