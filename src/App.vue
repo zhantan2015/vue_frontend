@@ -24,7 +24,7 @@
       <main>
         <router-view />
       </main>
-      <div class="theme-toggle theme" @click="dark = !dark" :class="{ dark: dark }">
+      <div class="theme-toggle theme" @click="toggle_theme" :class="{ dark: dark }">
         <svg class=" sun" width="200px" height="200.00px" viewBox="0 0 1024 1024" version="1.1"
           xmlns="http://www.w3.org/2000/svg">
           <path
