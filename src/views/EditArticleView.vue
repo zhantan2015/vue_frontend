@@ -50,13 +50,13 @@ export default {
 
     setup() {
         if (!localStorage['token'])
-            router.push('/')
+            router.push('/login')
         else
             request.put('/auth', {})
                 .then(res => {
                     if (res.code == StatusCode.failed) {
                         localStorage.removeItem('token')
-                        router.push('/')
+                        router.push('/login')
                     }
                 })
 

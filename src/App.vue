@@ -56,7 +56,18 @@ export default {
       dark.value = !dark.value
     }
     function flushCache() {
-      requests.get('/flush-cache').then(res => console.log(res))
+      if (!localStorage['token'])
+        router.push('/login')
+      else
+        requests.put('/auth', {})
+          .then(res => {
+            if (res.code == StatusCode.failed) {
+              localStorage.removeItem('token')
+              router.push('/login')
+            } else {
+              requests.get('/flush-cache').then(res => console.log(res))
+            }
+          })
     }
 
     return { router, menuActive, dark, toggle_theme, flushCache, notificationInfo }

@@ -3,7 +3,7 @@
         <header>
             <h2 v-text="article.title"></h2>
         </header>
-        <main v-html="comput_content">
+        <main v-html="article.comput_content ">
         </main>
         <footer>
             <span class="continue_reading">
