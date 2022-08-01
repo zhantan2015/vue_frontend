@@ -51,6 +51,10 @@ function replyComment(value) {
 }
 </script>
 <style scoped lang="less">
+.leave-a-message {
+  margin-bottom: 3rem;
+}
+
 h2 {
   padding: 1rem 0 2rem;
 }

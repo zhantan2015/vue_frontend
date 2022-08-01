@@ -111,12 +111,27 @@ textarea {
 .submit {
     margin-top: 1.8rem;
     padding: 0.88rem;
-    border: 1px solid #2c3e50;
     border-radius: .3rem;
     cursor: pointer;
+    background-color: #015958;
+    color: #bdc3c7;
 
     &:hover {
-        font-weight: 600;
+        color: #2c3e50;
+        background-color: #008F8C;
+    }
+
+}
+
+body.dark {
+    .submit {
+        background-color: #015958;
+        color: #cfc8be;
+    }
+
+    .submit:hover {
+        background-color: #008f8c;
+        color: #2c3e50;
     }
 }
 </style>
