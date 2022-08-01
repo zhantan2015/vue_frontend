@@ -54,6 +54,7 @@ export default {
       if (dark.value) document.body.classList.remove('dark')
       else document.body.classList.add('dark')
       dark.value = !dark.value
+      localStorage['dark'] = dark.value
     }
     function flushCache() {
       if (!localStorage['token'])
