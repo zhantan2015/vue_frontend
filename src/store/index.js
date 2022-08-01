@@ -22,8 +22,9 @@ function formatDT(time) {
 // 参数2：Options对象
 export const mainState = defineStore('main', {
     // data：必须是箭头函数，为了ts类型推导
+    // persist: true,
     state: () => ({
-        dark: true,
+        dark: eval(localStorage['dark']),
         notificationInfo: {
             active: false,
             type: 'info',

@@ -44,11 +44,23 @@
 
 </script>
 <style lang="less" scoped>
-body.dark {
-    --zt-color-start: #aaa;
-    --zt-color-end: #bbb;
+
+.skeleton {
+    --zt-color-start: #cccccccc;
+    --zt-color-end: #dddddddd;
+    // height: 320px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
 }
 
+body.dark {
+    .skeleton {
+        border-bottom: 1px solid #ffffff1f;
+        --zt-color-start: #ffffff1f;
+        --zt-color-end: #ffffff2e;
+    }
+
+}
 
 @keyframes skeleton_running {
     0% {
@@ -74,24 +86,10 @@ main .text,
 footer .f1,
 footer .f2,
 footer .f3 {
+    // background-color: #ffffff1f;
     animation: 2s skeleton_running infinite cubic-bezier(0.36, 0, 0.64, 1);
 }
 
-.skeleton {
-    // height: 320px;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #aaa;
-
-    --zt-color-start: #ffffff1f;
-    --zt-color-end: #ffffff2e;
-}
-
-body.dark {
-    .skeleton {
-        border-bottom: 1px solid #ffffff1f;
-    }
-
-}
 
 
 header,

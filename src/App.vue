@@ -48,8 +48,16 @@ import { ref } from 'vue'
 export default {
   setup() {
     let menuActive = ref(false)
-    let dark = ref(false)
-    return { menuActive, dark }
+
+
+    function toggle_theme() {
+      if (dark.value) document.body.classList.remove('dark')
+      else document.body.classList.add('dark')
+      dark.value = !dark.value
+      localStorage['dark'] = dark.value
+    }
+
+    return { router, menuActive, dark, toggle_theme, notificationInfo }
   }
 }
 
