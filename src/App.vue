@@ -102,13 +102,15 @@ export default {
     }
 
     function to_top() {
-
+      // toTopDom.scrollTop = 0;
       // 用setInterval来实现动态滑动
+      let step = 0
       let timer = setInterval(() => {
         if (toTopNum <= 0) {
           clearInterval(timer); // 清空
         } else {
-          toTopNum -= 50;
+          step += 10
+          toTopNum -= step;
           toTopDom.scrollTop = toTopNum;
         }
       }, 8);
@@ -228,8 +230,35 @@ export default {
   }
 
   &::-webkit-scrollbar {
-    display: none;
+    /* 竖向滚动条宽度 */
+    width: .5rem;
+    /* 横向滚动条高度 */
+    // height: .2rem;
   }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* 滚动条样式 */
+    // box-shadow: inset 0 0 3px red;
+    /* 内阴影 */
+    background-color: #39393D;
+    // background-color: blue;
+    /* 滚动条颜色 */
+  }
+
+
+
+  &::-webkit-scrollbar-thumb:hover {
+    width: .6rem;
+    /* 滚动条悬浮颜色 */
+  }
+
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    /* 定义两端按钮的样式 */
+  }
+
 }
 
 .site-header {
