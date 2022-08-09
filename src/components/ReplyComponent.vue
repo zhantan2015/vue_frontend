@@ -46,7 +46,7 @@ function submit() {
         commentInfo.author.replaceAll(' ', '') == '')
         return notification.info('带 * 的项目为必填项！')
     if (commentInfo.content.length > 500)
-        return message.value = '评论最长为500字'
+        return notification.info('评论最长为500字')
     emit('submit', commentInfo)
 }
 

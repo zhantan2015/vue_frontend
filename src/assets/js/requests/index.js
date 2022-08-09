@@ -6,7 +6,8 @@ function getToken() {
 }
 
 const service = axios.create({
-    baseURL: 'http://192.168.0.198:3333',
+    // baseURL: 'https://api.zhantan.pro' || '//localhost:8888',
+    baseURL: process.env.VUE_APP_REQUESTS_BASE_URL || '//localhost:8888',
     timeout: 60 * 1000,
 })
 
