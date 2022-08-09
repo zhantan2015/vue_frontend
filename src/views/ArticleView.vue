@@ -38,9 +38,8 @@ const articleStateObj = articleState()
 const commentStateObj = commentState()
 const { authorInfo } = storeToRefs(commentStateObj)
 
-
 const article = articleStateObj.getArticleByAid(router.params['aid'])
-
+console.log(article)
 commentStateObj.getCommentListByAid(article['aid'])
 
 let showReply = ref(true)

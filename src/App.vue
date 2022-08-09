@@ -1,6 +1,6 @@
 <template>
   <div class="app__outer theme" :class="{ dark: dark }">
-    <div class="app__inner theme" :class="{ dark: dark }">
+    <div class="app__inner theme" :class="{ dark: dark }" @scroll="app_scroll">
       <header class="site-header">
         <div class="title">
           <h1>川之上</h1>
@@ -37,6 +37,16 @@
         </svg>
         <div class="mask"></div>
       </div>
+      <transition name="to_top_transition">
+        <div class="to-top" title="回到顶部" @click="to_top" v-show="showToTop">
+          <svg t="1660009585033" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="2993" width="200" height="200">
+            <path
+              d="M862.464 161.536l-700.928 0c-30.976 0-56.096-25.12-56.096-56.096l0-28.064c0-30.944 25.12-56.064 56.096-56.064l700.896 0c30.976 0 56.096 25.12 56.096 56.064l0 28.032c0 31.008-25.12 56.096-56.096 56.096l0 0 0 0zM138.528 531.68c0 0 306.816-245.792 309.888-248.864 14.304-13.888 31.904-22.368 49.952-25.312 1.76-0.32 3.488-0.608 5.248-0.8 2.816-0.32 5.6-0.352 8.384-0.352 2.816-0.032 5.568 0.032 8.352 0.352 1.792 0.192 3.552 0.48 5.28 0.8 18.048 2.976 35.616 11.424 49.92 25.312 3.104 3.008 309.856 248.864 309.856 248.864 33.152 32.224 30.304 65.44-2.784 97.696s-77.376 3.04-110.496-29.216l-190.08-150.432 0 496.864c0 31.008-25.088 56.096-56.096 56.096l-28 0c-30.976 0-56.096-25.12-56.096-56.096l0-496.864-190.048 150.432c-33.088 32.288-77.408 61.536-110.496 29.216-33.056-32.256-35.872-65.44-2.816-97.696l0 0 0 0z"
+              p-id="2994"></path>
+          </svg>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -47,8 +57,20 @@ import { ref } from 'vue'
 
 export default {
   setup() {
-    let menuActive = ref(false)
+    // 读取mainState中的内容
+    const mainStates = mainState()
+    // 将mainStates中存储的内容转换为响应式对象
+    let { dark, notificationInfo } = storeToRefs(mainStates)
 
+    const articleStateObj = articleState()
+    articleStateObj.getArticleList()//获取文章列表
+
+    if (dark.value) document.body.classList.add('dark')
+    setTimeout(() => document.body.classList.add('theme'))
+
+    let menuActive = ref(false)
+    let showToTop = ref(false)
+    let toTopDom, toTopNum = null;
 
     function toggle_theme() {
       if (dark.value) document.body.classList.remove('dark')
@@ -57,7 +79,29 @@ export default {
       localStorage['dark'] = dark.value
     }
 
-    return { router, menuActive, dark, toggle_theme, notificationInfo }
+    function app_scroll(e) {
+
+      toTopNum = e.target.scrollTop
+      if (toTopNum > 500) showToTop.value = true
+      else showToTop.value = false
+      toTopDom = e.target
+    }
+
+    function to_top() {
+
+      // 用setInterval来实现动态滑动
+      let timer = setInterval(() => {
+        if (toTopNum <= 0) {
+          clearInterval(timer); // 清空
+        } else {
+          toTopNum -= 50;
+          toTopDom.scrollTop = toTopNum;
+        }
+      }, 8);
+
+    }
+
+    return { router, menuActive, showToTop, dark, toggle_theme, notificationInfo, to_top, app_scroll }
   }
 }
 
@@ -76,7 +120,157 @@ export default {
     overflow-y: auto;
     padding: 0 4vw;
     box-sizing: border-box;
-    background-color: #eff0f1;
+
+    display: flex;
+    padding: .6rem;
+    align-items: center;
+    // justify-content: center;
+
+
+    .n_icon {
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      padding-left: 1rem;
+    }
+
+    .n_text {
+      width: 100%;
+      padding-bottom: 1px;
+      padding-left: 1rem;
+      text-align: left;
+
+
+      span {
+        display: block;
+        height: 1rem;
+        line-height: 1rem;
+      }
+    }
+
+  }
+
+  .notification.dark {
+    background-color: #48484e;
+    color: #ffffffd1
+  }
+
+  .v-enter-active,
+  .v-leave-active {
+    transition: all .1s ease-in-out;
+  }
+
+  .v-enter-to,
+  .v-leave-from {
+    top: calc(var(--outer-padding) + .3rem);
+    opacity: 1;
+  }
+
+  .v-enter-from,
+  .v-leave-to {
+    top: calc(var(--outer-padding));
+    opacity: 0;
+  }
+
+  .to_top_transition-enter-active,
+  .to_top_transition-leave-active {
+    transition: all .3s ease-in-out;
+
+  }
+
+  .to_top_transition-enter-to,
+  .to_top_transition-leave-from {
+    opacity: 1;
+  }
+
+  .to_top_transition-enter-from,
+  .to_top_transition-leave-to {
+    opacity: 0;
+  }
+}
+
+.app__inner {
+  height: calc(100vh - 2 * var(--outer-padding));
+  overflow-y: auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  background-color: #eff0f1;
+
+  &.dark {
+    background-color: #2b2d2e;
+
+    & * {
+      transition-property: color;
+      color: #cfc8be;
+    }
+
+    & input,
+    & select,
+    & textarea {
+      background-color: #7f8c8d;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.site-header {
+  text-align: left;
+  // padding: 2rem 4rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #7f8c8d;
+
+  .title {
+    flex-grow: 1;
+
+    h1 {
+      font-size: 1.4375rem;
+      cursor: pointer;
+    }
+
+    h2 {
+      font-family: Georgia, serif;
+      color: #7f8c8d;
+      font-size: .86rem;
+      margin-left: 1rem;
+    }
+  }
+
+  .menu-btn {
+    cursor: pointer;
+
+    --menu-w: 1.6rem;
+    --menu-padding-y: .2rem;
+    --menu-padding-x: .3rem;
+    --menu-item-h: 2px;
+
+    .menu-border {
+      width: var(--menu-w);
+      height: var(--menu-w);
+      border: solid 1px #3d3d3d;
+      border-radius: .3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: var(--menu-padding-y) --menu-padding-x;
+
+      #menu-1,
+      #menu-2,
+      #menu-3 {
+        height: var(--menu-item-h);
+        width: calc(var(--menu-w) - 2 * var(--menu-padding-x));
+        background-color: #3d3d3d;
+        transition: 0.2s all ease-in-out;
+      }
+    }
+
     &.dark {
       background-color: #2b2d2e;
       & * {
@@ -180,9 +374,62 @@ export default {
       }
     }
   }
-  main {
-    margin-top: 2rem;
-    // padding: 0 4rem;
+}
+
+main {
+  margin-top: 2rem;
+  // padding: 0 4rem;
+}
+
+body.dark {
+
+  .to-top,
+  .theme-toggle {
+    background-color: #39393D;
+  }
+}
+
+.to-top,
+.theme-toggle {
+  --tt-p: 6px;
+  --tt-item-w: 1.3rem;
+  cursor: pointer;
+  position: absolute;
+  right: calc(2.6rem + var(--tt-item-w) * 2 + var(--tt-p) * 4);
+  bottom: 2.6rem;
+  border-radius: 1.5rem;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #2c3e50;
+}
+
+.to-top {
+  // 高度为svg宽度+两倍的padding值
+  height: calc(var(--tt-item-w) + var(--tt-p) * 2);
+  width: calc(var(--tt-item-w) + var(--tt-p) * 2);
+
+  svg {
+    width: var(--tt-item-w);
+    height: var(--tt-item-w);
+    fill: #eff0f1;
+  }
+}
+
+.theme-toggle {
+  right: 2.6rem;
+  // 高度为svg宽度+两倍的padding值
+  height: calc(var(--tt-item-w) + var(--tt-p) * 2);
+  // 宽度为svg宽度+三倍padding值
+  width: calc(var(--tt-item-w) * 2 + var(--tt-p) * 3);
+
+  .sun,
+  .moon,
+  .mask {
+    width: var(--tt-item-w);
+    height: var(--tt-item-w);
   }
   .theme-toggle {
     --tt-p: 6px;
@@ -219,12 +466,25 @@ export default {
       transition: all .2s ease-in;
     }
   }
-  .theme-toggle.dark {
-    background-color: #39393D;
-    .mask {
-      left: calc(var(--tt-item-w) + var(--tt-p) * 2);
-      background-color: #7f8c8d;
-    }
+
+  .mask {
+    position: absolute;
+    width: calc(var(--tt-item-w) + var(--tt-p) / 2);
+    height: calc(var(--tt-item-w) + var(--tt-p) / 2);
+    background-color: #eff0f1;
+    border-radius: 50%;
+    left: calc(var(--tt-p) / 2);
+    transition: all .2s ease-in;
+  }
+}
+
+
+.theme-toggle.dark {
+  background-color: #39393D;
+
+  .mask {
+    left: calc(var(--tt-item-w) + var(--tt-p) * 2);
+    background-color: #7f8c8d;
   }
 }
 </style>

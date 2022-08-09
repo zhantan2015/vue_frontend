@@ -47,16 +47,24 @@ export const articleState = defineStore('article', {
     state: () => ({
         articleList: []
     }),
-    getters: {},
-
+    getters: {
+    },
     actions: {
         async getArticleList() {
             let res = await request.get('/article')
             this.articleList = res.data.map(i => {
                 i.create_date = formatDT(i.create_date);
                 i.category = i.category || '未分类'
+
+                if (i.content.length <= 100) {
+                    i.comput_content = i.content
+                }
+                else {
+                    let str = i.content
+                    i.comput_content = str.slice(0, str.indexOf('</p>'))
+                }
                 return i
-            })
+            }).reverse()
         },
         getArticleByAid(aid) {
             return this.articleList.filter(i => i.aid == aid)[0]
