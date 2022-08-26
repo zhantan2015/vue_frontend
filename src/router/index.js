@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoginView from '../views/LoginView'
 
 const routes = [
   {
@@ -8,13 +9,29 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/about-me',
+    name: 'aboutMe',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-<<<<<<< HEAD
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutMeView.vue')
+  },
+  {
+    path: '/leave-message',
+    name: 'leaveAMessage',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/LeaveAMessageView.vue')
+  }, {
+    path: '/edit-article/:aid',
+    name: 'editArticleItem',
+    component: () => import('../views/EditArticleView.vue')
   }, {
     path: '/edit-article',
     name: 'editArticle',
@@ -27,8 +44,10 @@ const routes = [
     path: '/:pathMatch(.*)',
     name: 'test',
     component: () => import('../views/Test.vue')
-=======
->>>>>>> 09cb203 (切换分支master)
+  }, {
+    path: '/article/:aid',
+    name: 'article',
+    component: () => import('../views/ArticleView.vue')
   }
 ]
 
@@ -36,5 +55,6 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
 
 export default router

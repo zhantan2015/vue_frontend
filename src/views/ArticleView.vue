@@ -1,5 +1,5 @@
 <template>
-    <!-- <Article :article="article" :full="true"></Article> -->
+    <Article :article="article" :full="true"></Article>
     <div class="comments__area">
         <h2>七嘴八舌</h2>
         <div class="comment__blank comment_item" v-if="commentStateObj.commentList.length == 0">
@@ -26,7 +26,8 @@ import { articleState, commentState } from '@/store';
 import { storeToRefs } from 'pinia'
 
 import request from '@/assets/js/requests'
-// import Article from '../components/ArticleComponent.vue'
+// import Article from '@/components/ArticleComponent.vue'
+import Article from '@/components/articleComponent.vue'
 import Reply from '@/components/ReplyComponent.vue'
 import Comment from '@/components/CommentComponent.vue'
 

@@ -6,11 +6,11 @@
         <Editor :init="init" v-model="articleInfo.content"></Editor>
         <div class="input-group">
             <label for="tags">标签</label>
-            <input type="text" id="tags" v-model="tags">
+            <input type="text" id="tags" v-model="comput_tags">
         </div>
         <div class="input-group">
             <label for="categroy">分类</label>
-            <select name="categroy" id="categroy" v-model="articleInfo.acid" @click="flushCategroyList">
+            <select name="categroy" id="categroy" v-model="articleInfo.acid">
                 <option value="">未分类</option>
                 <option :value="item.acid" v-for="item in categories" :key="item.acid" v-text="item.acname">
                 </option>
@@ -39,7 +39,9 @@
 import { reactive, ref, computed, toRefs } from 'vue';
 import request from '../assets/js/requests';
 import router from '@/router';
-import { StatusCode } from '@/assets/js/common/apiResult'
+import { useRoute } from 'vue-router';
+import { articleState } from '@/store';
+import { mainState } from '@/store';
 //引入tinymce编辑器
 import Editor from '@tinymce/tinymce-vue';
 export default {
@@ -54,7 +56,7 @@ export default {
         else
             request.put('/auth', {})
                 .then(res => {
-                    if (res.code == StatusCode.failed) {
+                    if (res.type == "failed") {
                         localStorage.removeItem('token')
                         router.push('/login')
                     }
@@ -81,40 +83,53 @@ export default {
             // language: 'zh_CN', //本地化设置
             height: 350
         }
-
-        let tags = ref('')
-        let comput_tags = computed(() =>
-            // 按；号切割后去重再取前三个值
-            [...new Set(tags.value.replaceAll(' ', '')
-                .replaceAll('；', ';')
-                .split(';')
-                .filter(i => {
-                    return !!i
-                }))].slice(0, 3)
-        )
+        const _router = useRoute()
+        const mainStateObj = mainState()
 
         let data = reactive({
             articleInfo: {
-                title: '', content: '', acid: '', tags: comput_tags
+                title: '', content: '', acid: '', tags: ['']
             },
             new_category_name: '',
             categories: []
         })
+        let comput_tags = computed({
+            get() {
+                return data.articleInfo.tags.join(';')
+            },
+            set(value) {
+                data.articleInfo.tags = [...new Set(value
+                    .replace(/\s/g, '') //去掉所有空格
+                    .replace(/[;；,，]/g, ';') //全半角;和,替换成半角;
+                    .split(';') //切割
+                )].slice(0, 3)
+            }
+        })
 
+
+        async function flushCategroyList() {
+            const res = await request.get('/category');
+            data.categories = res.data;
+        }
         async function postCategory() {
             let acname = data.new_category_name;
             if (!acname) return
-            await request.post('/category', { acname })
+            let res = await request.post('/category', { acname })
+            await flushCategroyList()
+            mainStateObj.activeNotification(res)
             data.new_category_name = ''
         }
 
-        function flushCategroyList() {
-            request.get('/category').then(res => {
-                data.categories = res.data
-            })
-        }
 
         function postArticle() {
+
+            function _activeNotification(res) {
+                mainStateObj.activeNotification(res)
+                if (res.type == 'success')
+                    data.articleInfo = {
+                        title: '', content: '', acid: '', tags: ['']
+                    }
+            }
 
             let postData = {
                 ...data.articleInfo
@@ -123,18 +138,38 @@ export default {
             if (postData.title == '' || postData.content == '') {
                 return
             }
+            if (postData.acid == '') delete postData.acid
+            const aid = _router.params['aid']
+            if (aid) {
+                delete postData.comput_content
+                delete postData.create_date
+                delete postData.category
+                postData.tags = postData.tags.filter(i => !!i)//去除空内容
+                request.put('/article/' + aid, postData)
+                    .then(_activeNotification)
+            } else {
+                request.post('/article', postData)
+                    .then(_activeNotification)
+            }
+        }
 
-            request.post('/article', postData).then(res => {
-                console.log(res)
-                tags.value = ''
-                data.articleInfo = {
-                    title: '', content: '', acid: '', tags: comput_tags
-                }
+
+        flushCategroyList()
+        const aid = _router.params['aid']
+        const articleStateObj = articleState()
+        if (aid) {
+            data.articleInfo = articleStateObj.getArticleByAid(aid)
+
+            flushCategroyList().then(() => {
+
+                data.articleInfo.acid =
+                    data.categories.filter(i =>
+                        i.acname == data.articleInfo.category)[0].acid
             })
         }
 
         return {
-            init, tags, comput_tags,
+            init, comput_tags,
             ...toRefs(data),
             postCategory, flushCategroyList, postArticle
         }
@@ -148,6 +183,7 @@ export default {
 
 #new_categroy_a {
     display: inline-flex;
+
     svg {
         width: 2rem;
         height: 2rem;
@@ -155,8 +191,63 @@ export default {
     }
 }
 
+
 .preview {
     height: 2%;
     overflow-y: auto;
+}
+
+
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 2rem;
+    justify-items: center;
+    align-items: center;
+
+    margin: 2rem 0;
+
+    label {
+        font-size: 1rem;
+        margin-right: 0.2rem;
+    }
+
+
+    input,
+    select {
+        display: block;
+        border-style: none;
+        flex-grow: 1;
+        padding: 0 .2rem;
+        margin: 0 .2rem;
+        font-size: 1rem;
+        border-radius: 3px;
+        height: 100%;
+        outline: none;
+    }
+
+    span.submit {
+        display: block;
+        padding: 10px 16px;
+        border-radius: 8px;
+        background-color: #015958;
+        color: #bdc3c7;
+        margin-left: .6rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #008F8C;
+        }
+    }
+
+    & a {
+        color: dodgerblue;
+
+        &:hover {
+            color: #444747;
+        }
+    }
+
 }
 </style>

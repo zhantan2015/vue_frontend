@@ -39,7 +39,7 @@ export const mainState = defineStore('main', {
             this.notificationInfo.active = true
             const timeout = option.timeout || 1600
             setTimeout(() => this.notificationInfo.active = false, timeout)
-        }
+        },
     }
 })
 export const articleState = defineStore('article', {
@@ -68,6 +68,12 @@ export const articleState = defineStore('article', {
         },
         getArticleByAid(aid) {
             return this.articleList.filter(i => i.aid == aid)[0]
+        },
+        delArticleByAid(aid) {
+            let alist = this.articleList
+            let index
+            for (let i in alist) { if (alist[i].aid == aid) { index = i; break } }
+            this.articleList.splice(index, 1)
         }
     }
 })
