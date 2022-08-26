@@ -9,6 +9,8 @@
 
 <script setup>
 // @ is an alias to /src
+
+// import Article from '@/components/ArticleComponent.vue'
 import Article from '@/components/articleComponent.vue'
 import Skeleton from '@/components/SkeletonComponent.vue'
 import { storeToRefs } from 'pinia'
@@ -22,3 +24,13 @@ const articleStateObj = articleState()
 const { articleList } = storeToRefs(articleStateObj)
 
 </script>
+<style lang="less">
+.article {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #7f8c8d;
+
+  &:last-child {
+    border: none;
+  }
+}
+</style>

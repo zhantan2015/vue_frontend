@@ -1,15 +1,15 @@
 <template>
     <article>
         <header>
-            <h2 v-text="article.title"></h2>
+            <h1 v-text="article.title"></h1>
         </header>
         <main v-html="full ? article.content : comput_content">
         </main>
         <footer>
-            <span class="continue_reading">
+            <span class="continue_reading" @click="continueReading" v-if="!full">
                 阅读更多
             </span>
-            <div class="article_info">
+            <div class="article_info" :class="{ dark: dark }">
                 <div>
                     <svg t="1658394755012" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="2070" width="200" height="200">
@@ -17,7 +17,7 @@
                             d="M896 448H128v447.957333l477.738667 0.021334L896 895.957333V448z m0-42.666667V192.042667C896 192 768 192 768 192V149.333333h128.042667A42.666667 42.666667 0 0 1 938.666667 192.042667v703.914666A42.624 42.624 0 0 1 896.064 938.666667H127.936A42.666667 42.666667 0 0 1 85.333333 895.957333V192.042667C85.333333 168.469333 104.256 149.333333 127.957333 149.333333H256v42.666667l-128 0.042667V405.333333h768zM298.666667 85.333333h42.666666v170.666667h-42.666666V85.333333z m384 0h42.666666v170.666667h-42.666666V85.333333zM384 149.333333h256v42.666667H384V149.333333z"
                             p-id="2071"></path>
                     </svg>
-                    <span v-text="article.createTime"></span>
+                    <time v-text="article.create_date"></time>
                 </div>
                 <div>
                     <svg t="1658395131742" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -50,7 +50,7 @@
                             d="M859.83201 220.122373c-10.478655 4.246721-22.410406-0.808412-26.657126-11.276834-2.046612-5.0449-5.055133-9.578146-8.953929-13.46671-7.705496-7.705496-17.938558-11.941983-28.836769-11.941983-10.877745 0-21.110807 4.236488-28.795836 11.93175-15.891945 15.891945-15.881712 41.750893 0.010233 57.642838 15.871479 15.881712 41.730427 15.881712 57.622372 0 7.992021-7.992021 20.957311-7.992021 28.939099 0.010233 7.992021 7.992021 7.992021 20.957311-0.010233 28.939099-15.922644 15.912411-36.839023 23.873734-57.745169 23.873734-20.926612 0-41.832757-7.961322-57.755402-23.873734-31.845289-31.855522-31.855522-83.675748-0.020466-115.53127 15.421224-15.431457 35.938514-23.924899 57.755402-23.924899 21.827121 0 42.34441 8.493441 57.775868 23.924899 7.78736 7.78736 13.824867 16.884552 17.938558 27.03575C875.345332 203.933669 870.300432 215.875652 859.83201 220.122373z"
                             p-id="4914"></path>
                     </svg>
-                    <span v-for="tag in article.tags" :key="new Date().getTime()" v-text="tag"></span>
+                    <span v-for="tag in article.tags" :key="createId" v-text="tag"></span>
                 </div>
             </div>
         </footer>
@@ -107,23 +107,37 @@ article {
             text-decoration: underline;
             font-family: Merriweather, Georgia, serif;
             font-weight: 600;
-            display: block;
+            cursor: pointer;
         }
 
         .article_info {
             display: flex;
-            margin-top: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+            color: #9e9486 !important;
+            font-family: Montserrat, "Helvetica Neue", sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 200;
+            line-height: 1.6153846154;
+
+            &.dark {
+                svg {
+                    fill: #eff0f1;
+                }
+            }
 
             div {
                 display: inline-flex;
                 align-items: center;
                 margin-right: .5rem;
+                margin-bottom: .5rem;
 
                 svg {
                     width: 1rem;
                     height: 1rem;
-                    fill: #eff0f1;
                     margin-right: .2rem;
+                    fill: #333333;
                 }
 
                 span {
